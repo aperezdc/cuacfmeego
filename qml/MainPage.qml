@@ -19,13 +19,15 @@ Page {
 	}
 
 	Text {
-		text: 'Now Playing'
 		color: theme.inverted ? UIConstants.COLOR_INVERTED_FOREGROUND : UIConstants.COLOR_FOREGROUND
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.top: parent.top
 		anchors.topMargin: UIConstants.DEFAULT_MARGIN
 		font.pixelSize: UIConstants.FONT_XLARGE
 		font.family: UIConstants.FONT_FAMILY
+		text: controller.buffering ? 'Buffering...'
+		                           : (controller.playing ? 'Playing'
+		                                                 : 'Paused')
 	}
 
 	Image {
