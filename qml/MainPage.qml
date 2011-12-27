@@ -7,6 +7,7 @@
 
 import QtQuick 1.1
 import com.nokia.meego 1.0
+import "file:///usr/lib/qt4/imports/com/meego/UIConstants.js" as UIConstants
 
 
 Page {
@@ -15,6 +16,21 @@ Page {
 	Component {
 		id: aboutPage
 		AboutPage { }
+	}
+
+	Text {
+		text: 'Now Playing'
+		color: theme.inverted ? UIConstants.COLOR_INVERTED_FOREGROUND : UIConstants.COLOR_FOREGROUND
+		anchors.horizontalCenter: parent.horizontalCenter
+		anchors.top: parent.top
+		anchors.topMargin: UIConstants.DEFAULT_MARGIN
+		font.pixelSize: UIConstants.FONT_XLARGE
+		font.family: UIConstants.FONT_FAMILY
+	}
+
+	Image {
+		anchors.centerIn: parent
+		source: 'qrc:/cuacfmeego-logo.png'
 	}
 
 	Menu {
@@ -33,6 +49,21 @@ Page {
 			anchors.right: parent.right
 			onClicked: (mainMenu.status == DialogStatus.Closed) ?
 								    mainMenu.open() : mainMenu.close()
+		}
+
+		ToolButton {
+			id: playButton
+			text: 'Play'
+			anchors.horizontalCenter: parent.horizontalCenter;
+			onClicked: {
+				var newState = !controller.isPlaying()
+				controller.setPlaying(newState)
+				if (newState) {
+					playButton.text = 'Pause'
+				} else {
+					playButton.text = 'Play'
+				}
+			}
 		}
 	}
 }
