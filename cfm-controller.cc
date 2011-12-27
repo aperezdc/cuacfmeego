@@ -94,8 +94,35 @@ void CFMController::setMuted(bool muteValue)
 bool CFMController::isPlaying() const
 {
     GstState state;
-    gst_element_get_state(_playbin, &state, NULL, GST_CLOCK_TIME_NONE);
-    return state == GST_STATE_PLAYING;
+    GstState nextState;
+
+    gst_element_get_state(_playbin,
+                          &state,
+                          &nextState,
+                          GST_CLOCK_TIME_NONE);
+
+    /*
+     * If the element is pending to transition to a different state,
+     * use the next state as reference, because GStreamer will be
+     * changing it behind our back to that.
+     */
+    if (nextState != GST_STATE_VOID_PENDING)
+        state = nextState;
+
+    switch (state) {
+        case GST_STATE_NULL:  /* Initial state (of course, not playing) */
+        case GST_STATE_READY: /* Ready to go to pause, but not playing either. */
+        case GST_STATE_PAUSED:
+            return false;
+
+        case GST_STATE_PLAYING:
+            return true;
+
+        default:
+            qCritical("Unrecognized GStreamer pipeline state!\n"
+                      "CMFController::isPlaying() returning false anyway");
+            return false;
+    }
 }
 
 
