@@ -9,6 +9,7 @@
 #include <QApplication>
 #include <QDeclarativeView>
 #include <MDeclarativeCache>
+#include <gst/gst.h>
 
 
 static const QUrl INITIAL_VIEW("qrc:/qml/main.qml");
@@ -17,6 +18,8 @@ static const QUrl INITIAL_VIEW("qrc:/qml/main.qml");
 Q_DECL_EXPORT int
 main (int argc, char *argv[])
 {
+    gst_init(&argc, &argv);
+
     QApplication *application(MDeclarativeCache::qApplication(argc, argv));
     QDeclarativeView    *view(MDeclarativeCache::qDeclarativeView());
 
@@ -30,6 +33,7 @@ main (int argc, char *argv[])
 
     delete view;
     delete application;
+    gst_deinit();
 
     return result;
 }

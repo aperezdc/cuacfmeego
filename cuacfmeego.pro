@@ -1,13 +1,17 @@
 # vim: filetype=make expandtab
 
-TEMPLATE = app
-TARGET   = cuacfmeego
-QT      += declarative \
-           network \
-           xml
-CONFIG  += meegotouch \
-           qt-boostable \
-           qdeclarative-boostable
+TEMPLATE   = app
+TARGET     = cuacfmeego
+QT        += declarative \
+             network \
+             xml
+CONFIG    += link_pkgconfig \
+             meegotouch \
+             qt-boostable \
+             qdeclarative-boostable
+PKGCONFIG += gstreamer-net-0.10 \
+             gstreamer-base-0.10 \
+             gstreamer-audio-0.10
 
 # Do not clutter the source directory
 #
