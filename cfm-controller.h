@@ -10,7 +10,7 @@
 
 #include <QObject>
 #include <QUrl>
-
+#include <gst/gst.h>
 
 class QDeclarativeContext;
 
@@ -22,8 +22,16 @@ public:
     CFMController(QDeclarativeContext* context);
     virtual ~CFMController();
 
+public slots:
+    bool isMuted() const;
+    void setMuted(bool muteValue);
+
+    bool isPlaying() const;
+    void setPlaying(bool playValue);
+
 private:
     QDeclarativeContext* _context;
+    GstElement *_playbin;
 };
 
 #endif /* !__cfm_controller_h__ */
