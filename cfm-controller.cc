@@ -167,10 +167,14 @@ void CFMController::handleGstMessage(GstBus     *bus,
          * Update the buffering status and handle pausing the playback when
          * the fill rate of the buffer is below 100% -- recommended in docs.
          */
-        case GST_MESSAGE_BUFFERING:
+        case GST_MESSAGE_BUFFERING: {
+            bool wasBuffering = controller->isBuffering();
+
             gst_message_parse_buffering(message, &controller->_bufferFillRate);
 
             controller->emit bufferingStatusChanged(controller->_bufferFillRate);
+            if (wasBuffering != controller->isBuffering())
+                controller->emit bufferingChanged(controller->isBuffering());
 
             qDebug("Buffering: %u%%", controller->_bufferFillRate);
             if (controller->_bufferFillRate < 100 && controller->isPlaying())
@@ -178,6 +182,7 @@ void CFMController::handleGstMessage(GstBus     *bus,
             else if (!controller->isPlaying())
                 controller->setPlaying(true);
             break;
+        }
 
         /*
          * Theorically the stream is infinite, still EOS may be received

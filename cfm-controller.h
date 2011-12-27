@@ -26,6 +26,10 @@ public:
                READ   getBufferingStatus
                NOTIFY bufferingStatusChanged)
 
+    Q_PROPERTY(bool   buffering
+               READ   isBuffering
+               NOTIFY bufferingChanged)
+
     Q_PROPERTY(bool   playing
                READ   isPlaying
                WRITE  setPlaying
@@ -48,6 +52,7 @@ public slots:
 
 signals:
     void playbackError(const QString& message);
+    void bufferingChanged(bool newStatus);
     void mutedStatusChanged(bool newStatus);
     void playingStatusChanged(bool newStatus);
     void bufferingStatusChanged(qreal fillRate);
