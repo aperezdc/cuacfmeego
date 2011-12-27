@@ -55,7 +55,7 @@ Page {
 
 		ToolButton {
 			id: playButton
-			text: controller.playing ? 'Pause' : 'Play'
+			text: (controller.playing || controller.buffering) ? 'Pause' : 'Play'
 			anchors.horizontalCenter: parent.horizontalCenter;
 			onClicked: controller.setPlaying(!controller.isPlaying())
 		}
