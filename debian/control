@@ -9,7 +9,6 @@ Homepage: http://gitorious.org/aperez-sandbox/cuacfmeego
 Package: cuacfmeego
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, qt-components,
- gstreamer0.10-mpegaudioparse-maemo,
  gstreamer0.10-plugins-base,
  gstreamer0.10-plugins-good,
  gstreamer0.10-plugins-bad,
