@@ -8,7 +8,11 @@ Homepage: http://gitorious.org/aperez-sandbox/cuacfmeego
 
 Package: cuacfmeego
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, qt-components
+Depends: ${misc:Depends}, ${shlibs:Depends}, qt-components,
+ gstreamer0.10-mpegaudioparse-maemo,
+ gstreamer0.10-plugins-base,
+ gstreamer0.10-plugins-good,
+ gstreamer0.10-plugins-bad,
 Description: Tuner for the streaming service of Cuac FM.
  A Corunna community radio broadcasts in FM since 1996, and
  has had Internet streaming since 2001. The application allows
