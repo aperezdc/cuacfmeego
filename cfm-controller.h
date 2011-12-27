@@ -22,6 +22,20 @@ public:
     CFMController(QDeclarativeContext* context);
     virtual ~CFMController();
 
+    Q_PROPERTY(int    bufferingStatus
+               READ   getBufferingStatus
+               NOTIFY bufferingStatusChanged)
+
+    Q_PROPERTY(bool   playing
+               READ   isPlaying
+               WRITE  setPlaying
+               NOTIFY playingStatusChanged)
+
+    Q_PROPERTY(bool   muted
+               READ   isMuted
+               WRITE  setMuted
+               NOTIFY mutedStatusChanged)
+
 public slots:
     bool isMuted() const;
     void setMuted(bool muteValue);
@@ -29,9 +43,23 @@ public slots:
     bool isPlaying() const;
     void setPlaying(bool playValue);
 
+    int  getBufferingStatus() const;
+    bool isBuffering() const;
+
+signals:
+    void playbackError(const QString& message);
+    void mutedStatusChanged(bool newStatus);
+    void playingStatusChanged(bool newStatus);
+    void bufferingStatusChanged(qreal fillRate);
+
 private:
     QDeclarativeContext* _context;
-    GstElement *_playbin;
+    GstElement*          _playbin;
+    gint                 _bufferFillRate;
+
+    static void handleGstMessage(GstBus*     bus,
+                                 GstMessage* message,
+                                 gpointer    controller);
 };
 
 #endif /* !__cfm_controller_h__ */

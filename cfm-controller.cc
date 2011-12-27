@@ -58,13 +58,17 @@ getProperty<bool>(void* object, const gchar* name)
 
 
 CFMController::CFMController(QDeclarativeContext* context):
-    _context(context)
+    _context(context),
+    _bufferFillRate(-1)
 {
     Q_ASSERT(context);
 
     if ((_playbin = gst_element_factory_make("playbin2", "playbin")) == NULL) {
         qCritical("Could not create GStreamer playbin2 element");
     }
+
+    g_signal_connect(gst_pipeline_get_bus(GST_PIPELINE(_playbin)), "message",
+                     G_CALLBACK(CFMController::handleGstMessage), this);
 
     ::setProperty(_playbin, "uri", CUACFM_STREAM_URL);
 
@@ -88,6 +92,7 @@ bool CFMController::isMuted() const
 void CFMController::setMuted(bool muteValue)
 {
     ::setProperty(_playbin, "mute", muteValue);
+    emit mutedStatusChanged(muteValue);
 }
 
 
@@ -130,5 +135,89 @@ void CFMController::setPlaying(bool playingValue)
 {
     gst_element_set_state(_playbin, playingValue ? GST_STATE_PLAYING
                                                  : GST_STATE_PAUSED);
+
+    // TODO Wait for GStreamer notifies about status being actually changed
+    emit playingStatusChanged(playingValue);
 }
 
+
+bool CFMController::isBuffering() const
+{
+    return _bufferFillRate >= 0 && _bufferFillRate < 100;
+}
+
+
+int CFMController::getBufferingStatus() const
+{
+    return _bufferFillRate;
+}
+
+
+void CFMController::handleGstMessage(GstBus     *bus,
+                                     GstMessage *message,
+                                     gpointer    controllerptr)
+{
+    CFMController *controller = (CFMController*) controllerptr;
+
+    Q_ASSERT(controller);
+    Q_UNUSED(bus);
+
+    switch (GST_MESSAGE_TYPE(message)) {
+        /*
+         * Update the buffering status and handle pausing the playback when
+         * the fill rate of the buffer is below 100% -- recommended in docs.
+         */
+        case GST_MESSAGE_BUFFERING:
+            gst_message_parse_buffering(message, &controller->_bufferFillRate);
+
+            controller->emit bufferingStatusChanged(controller->_bufferFillRate);
+
+            qDebug("Buffering: %u%%", controller->_bufferFillRate);
+            if (controller->_bufferFillRate < 100 && controller->isPlaying())
+                controller->setPlaying(false);
+            else if (!controller->isPlaying())
+                controller->setPlaying(true);
+            break;
+
+        /*
+         * Theorically the stream is infinite, still EOS may be received
+         * e.g. if the server closes the connection. Handle it by pausing
+         * the playback.
+         */
+        case GST_MESSAGE_EOS:
+            controller->setPlaying(false);
+            break;
+
+        /*
+         * Errors are both printed printed to stderr and signaled.
+         * Warnings are printed out to stderr using qWarning().
+         */
+        case GST_MESSAGE_WARNING:
+        case GST_MESSAGE_ERROR: {
+            gchar *debuginfo = NULL;
+            GError *error = NULL;
+
+            // Note that playback must be stopped on errors.
+            if (GST_MESSAGE_TYPE(message) == GST_MESSAGE_ERROR) {
+                gst_message_parse_error(message, &error, &debuginfo);
+                controller->setPlaying(false);
+            }
+            else {
+                gst_message_parse_warning(message, &error, &debuginfo);
+            }
+
+            qWarning("GStreamer: %s", error->message);
+            qDebug  ("  - debug: %s", debuginfo);
+
+            if (GST_MESSAGE_TYPE(message) == GST_MESSAGE_ERROR)
+                controller->emit playbackError(QString(error->message));
+
+            g_error_free(error);
+            g_free(debuginfo);
+            break;
+        }
+
+        default: /* For the rest of messages, do nothing. */
+            break;
+    }
+}
