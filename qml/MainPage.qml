@@ -39,6 +39,10 @@ Page {
 		id: mainMenu
 		MenuLayout {
 			MenuItem {
+				text: 'Open website'
+				onClicked: Qt.openUrlExternally('http://cuacfm.org')
+			}
+			MenuItem {
 				text: 'About'
 				onClicked: appWindow.pageStack.push(aboutPage)
 			}
