@@ -55,17 +55,9 @@ Page {
 
 		ToolButton {
 			id: playButton
-			text: 'Play'
+			text: controller.playing ? 'Pause' : 'Play'
 			anchors.horizontalCenter: parent.horizontalCenter;
-			onClicked: {
-				var newState = !controller.isPlaying()
-				controller.setPlaying(newState)
-				if (newState) {
-					playButton.text = 'Pause'
-				} else {
-					playButton.text = 'Play'
-				}
-			}
+			onClicked: controller.setPlaying(!controller.isPlaying())
 		}
 	}
 }
