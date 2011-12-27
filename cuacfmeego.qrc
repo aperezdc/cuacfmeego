@@ -1,0 +1,15 @@
+<RCC>
+	<qresource prefix="/">
+
+		<!-- QML files -->
+		<file>qml/main.qml</file>
+		<file>qml/MainPage.qml</file>
+		<file>qml/AboutPage.qml</file>
+
+		<!-- Images -->
+		<file>cuacfmeego-logo.png</file>
+
+	</qresource>
+</RCC>
+<!-- vim: filetype=xml
+  -->

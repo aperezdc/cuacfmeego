@@ -1,0 +1,5 @@
+cuacfmeego
+qrc_*.cpp
+moc_*.cpp
+,build/
+Makefile

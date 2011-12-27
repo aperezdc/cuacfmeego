@@ -1,0 +1,39 @@
+#! /usr/bin/make -f
+
+# export DH_VERBOSE = 1
+
+QMAKE_OPTIONS = -makefile -nocache
+
+
+ifneq (,$(filter debug,$(DEB_BUILD_OPTIONS)))
+  QMAKE_OPTIONS += CONFIG*=debug CONFIG-=release
+  CFLAGS = -O0 -g
+else
+  QMAKE_OPTIONS += CONFIG*=release CONFIG-=debug
+endif
+
+
+ifneq (,$(filter noopt,$(DEB_BUILD_OPTIONS)))
+  CFLAGS = -O0 -g
+endif
+
+
+# Teach qmake about CFLAGS, poor qmake doesn't know about it...
+#
+QMAKE_OPTIONS += QMAKE_CXXFLAGS_RELEASE='$(CFLAGS)' \
+                 QMAKE_CXXFLAGS_DEBUG='$(CFLAGS)' \
+                 QMAKE_CFLAGS_RELEASE='$(CFLAGS)' \
+                 QMAKE_CFLAGS_DEBUG='$(CFLAGS)' \
+                 QMAKE_STRIP=: \
+
+
+%:
+	dh --buildsystem=qmake $@
+
+override_dh_auto_configure:
+	qmake $(QMAKE_OPTIONS)
+
+override_dh_strip:
+	dh_strip --dbg-package=cuacfmeego-dbg
+
+.PHONY: override_dh_strip override_dh_auto_configure

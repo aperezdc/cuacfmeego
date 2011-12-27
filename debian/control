@@ -1,0 +1,27 @@
+Source: cuacfmeego
+Section: user/network
+Priority: extra
+Maintainer: Adrian Perez <aperez@igalia.com>
+Build-Depends: debhelper (>= 7.0.50), applauncherd-dev
+Standards-Version: 3.8.4
+Homepage: http://gitorious.org/aperez-sandbox/cuacfmeego
+
+Package: cuacfmeego
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, qt-components
+Description: Tuner for the streaming service of Cuac FM.
+ A Corunna community radio broadcasts in FM since 1996, and
+ has had Internet streaming since 2001. The application allows
+ to listen to the stream, podcasts of programmes, and more.
+XB-Maemo-Display-Name: Cuac FM
+
+Package: cuacfmeego-dbg
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, cuacfmeego (= ${binary:Version})
+Description: Tuner for the streaming service of Cuac FM.
+ A Corunna community radio broadcasts in FM since 1996, and
+ has had Internet streaming since 2001. The application allows
+ to listen to the stream, podcasts of programmes, and more.
+ .
+ This package contains the debugging symbols for Cuac FM. It
+ is only needed for development purposes.
