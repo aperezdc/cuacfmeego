@@ -3,3 +3,7 @@ qrc_*.cpp
 moc_*.cpp
 ,build/
 Makefile
+debian/*.log
+debian/*.substvars
+debian/files
+debian/cuacfmeego-dbg/
