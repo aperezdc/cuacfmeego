@@ -25,9 +25,7 @@ Page {
 		anchors.topMargin: UIConstants.DEFAULT_MARGIN * 3
 		font.pixelSize: UIConstants.FONT_XLARGE
 		font.family: UIConstants.FONT_FAMILY
-		text: controller.buffering ? 'Buffering...'
-		                           : (controller.playing ? 'Playing'
-		                                                 : 'Paused')
+		text: controller.statusText
 	}
 
 	Image {

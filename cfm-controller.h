@@ -47,12 +47,18 @@ public:
                WRITE  setNetworkAvailable
                NOTIFY networkAvailableChanged)
 
+    Q_PROPERTY(QString statusText
+               READ   getStatusText
+               NOTIFY statusTextChanged)
+
 public slots:
     bool isMuted() const;
     void setMuted(bool muteValue);
 
     bool isPlaying() const;
     void setPlaying(bool playValue);
+
+    const QString& getStatusText() const;
 
     int  getBufferingStatus() const;
     bool isBuffering() const;
@@ -63,6 +69,7 @@ public slots:
 signals:
     void playbackError(const QString& message);
     void bufferingChanged(bool newStatus);
+    void statusTextChanged(const QString& newStatus);
     void mutedStatusChanged(bool newStatus);
     void playingStatusChanged(bool newStatus);
     void bufferingStatusChanged(qreal fillRate);
@@ -72,9 +79,12 @@ private:
     QDeclarativeContext* _context;
     ConIcConnection*     _connection;
     GstElement*          _playbin;
+    QString              _statusText;
     gint                 _bufferFillRate;
     bool                 _playPending;
     bool                 _connected;
+
+    void updateStatusText();
 
     static void handleGstMessage(GstBus*     bus,
                                  GstMessage* message,

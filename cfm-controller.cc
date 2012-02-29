@@ -112,6 +112,7 @@ void CFMController::setMuted(bool muteValue)
 {
     ::setProperty(_playbin, "mute", muteValue);
     emit mutedStatusChanged(muteValue);
+    updateStatusText();
 }
 
 
@@ -180,6 +181,7 @@ void CFMController::setPlaying(bool playingValue)
         // TODO Wait for GStreamer notifies about status being actually changed
         emit playingStatusChanged(false);
     }
+    updateStatusText();
 }
 
 
@@ -217,6 +219,8 @@ void CFMController::handleGstMessage(GstBus     *bus,
             controller->emit bufferingStatusChanged(controller->_bufferFillRate);
             if (wasBuffering != controller->isBuffering())
                 controller->emit bufferingChanged(controller->isBuffering());
+
+            controller->updateStatusText();
 
             qDebug("Buffering: %u%%", controller->_bufferFillRate);
             if (controller->_bufferFillRate < 100 && controller->isPlaying())
@@ -327,4 +331,42 @@ void CFMController::handleConnectionEvent(ConIcConnection      *connection,
             qDebug("network: disconnected");
             break;
     }
+
+    controller->updateStatusText();
+}
+
+
+void CFMController::updateStatusText()
+{
+    static const QString bufferingText("Buffering... %1%");
+    static const QString mutedText("%1 - Muted");
+    QString newText;
+
+    if (_connected) {
+        if (isBuffering())
+            newText = bufferingText.arg(getBufferingStatus());
+        else if (isPlaying())
+            newText = "Playing";
+        else
+            newText = "Paused";
+    }
+    else {
+        // No connection
+        if (_playPending)
+            newText = "Connecting...";
+        else
+            newText = "Disconnected";
+    }
+
+    if (isMuted())
+        newText = mutedText.arg(newText);
+
+    if (newText != _statusText)
+        emit statusTextChanged((_statusText = newText));
+}
+
+
+const QString& CFMController::getStatusText() const
+{
+    return _statusText;
 }
