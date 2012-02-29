@@ -61,6 +61,9 @@ getProperty<bool>(void* object, const gchar* name)
 
 CFMController::CFMController(QDeclarativeContext* context):
     _context(context),
+    _connection(NULL),
+    _playbin(NULL),
+    _statusText(""),
     _bufferFillRate(-1),
     _playPending(false),
     _connected(false)
@@ -73,10 +76,6 @@ CFMController::CFMController(QDeclarativeContext* context):
     }
     dbus_connection_setup_with_g_main(systembus, NULL);
 
-    if ((_playbin = gst_element_factory_make("playbin2", "playbin")) == NULL) {
-        qFatal("Could not create GStreamer playbin2 element");
-    }
-
     if ((_connection = con_ic_connection_new ()) == NULL) {
         qFatal("Coult not create ConIcConnection object");
     }
@@ -85,44 +84,71 @@ CFMController::CFMController(QDeclarativeContext* context):
                      G_CALLBACK(CFMController::handleConnectionEvent), this);
     ::setProperty(_connection, "automatic-connection-events", true);
 
-    g_signal_connect(gst_pipeline_get_bus(GST_PIPELINE(_playbin)), "message",
-                     G_CALLBACK(CFMController::handleGstMessage), this);
-
-    ::setProperty(_playbin, "uri", CUACFM_STREAM_URL);
-
     // Register the controller in the QML context.
     _context->setContextProperty("controller", this);
 }
 
 
+GstElement* CFMController::gstPipeline()
+{
+    if (!_playbin) {
+        if ((_playbin = gst_element_factory_make("playbin2", "playbin")) == NULL) {
+            qFatal("Could not create GStreamer playbin2 element");
+        }
+        g_signal_connect(gst_pipeline_get_bus(GST_PIPELINE(_playbin)), "message",
+                         G_CALLBACK(CFMController::handleGstMessage), this);
+        ::setProperty(_playbin, "uri", CUACFM_STREAM_URL);
+        qDebug("gstreamer: created playbin2 element");
+    }
+    return _playbin;
+}
+
+
+void CFMController::destroyGstPipeline()
+{
+    if (_playbin) {
+        gst_element_set_state(_playbin, GST_STATE_PAUSED);
+        gst_object_unref(_playbin);
+        _bufferFillRate = -1;
+        _playbin = NULL;
+        qDebug("gstreamer: destroyed playbin2 element");
+    }
+}
+
+
 CFMController::~CFMController()
 {
-    gst_object_unref(_playbin);
+    destroyGstPipeline();
     g_object_unref(_connection);
 }
 
 
 bool CFMController::isMuted() const
 {
-    return ::getProperty<bool>(_playbin, "mute");
+    return _playbin ? ::getProperty<bool>(_playbin, "mute") : false;
 }
 
 
 void CFMController::setMuted(bool muteValue)
 {
-    ::setProperty(_playbin, "mute", muteValue);
-    emit mutedStatusChanged(muteValue);
-    updateStatusText();
+    if (_playbin) {
+        ::setProperty(_playbin, "mute", muteValue);
+        emit mutedStatusChanged(muteValue);
+        updateStatusText();
+    }
 }
 
 
 bool CFMController::isPlaying() const
 {
-    GstState state;
-    GstState nextState;
+    if (!_playbin)
+        return false;
 
     if (_playPending)
         return false;
+
+    GstState state;
+    GstState nextState;
 
     gst_element_get_state(_playbin,
                           &state,
@@ -170,15 +196,14 @@ void CFMController::setPlaying(bool playingValue)
         else {
             qDebug("playback: network available -> playing");
             _playPending = false;
-            gst_element_set_state(_playbin, GST_STATE_PLAYING);
+            gst_element_set_state(gstPipeline(), GST_STATE_PLAYING);
             emit playingStatusChanged(true);
         }
     }
     else {
         qDebug("playback: stopped");
         _playPending = false;
-        gst_element_set_state(_playbin, GST_STATE_PAUSED);
-        // TODO Wait for GStreamer notifies about status being actually changed
+        destroyGstPipeline();
         emit playingStatusChanged(false);
     }
     updateStatusText();
@@ -187,7 +212,7 @@ void CFMController::setPlaying(bool playingValue)
 
 bool CFMController::isBuffering() const
 {
-    return _bufferFillRate >= 0 && _bufferFillRate < 100;
+    return _playbin && _bufferFillRate >= 0 && _bufferFillRate < 100;
 }
 
 
@@ -204,6 +229,7 @@ void CFMController::handleGstMessage(GstBus     *bus,
     CFMController *controller = (CFMController*) controllerptr;
 
     Q_ASSERT(controller);
+    Q_ASSERT(controller->_playbin);
     Q_UNUSED(bus);
 
     switch (GST_MESSAGE_TYPE(message)) {

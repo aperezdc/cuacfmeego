@@ -85,6 +85,8 @@ private:
     bool                 _connected;
 
     void updateStatusText();
+    GstElement* gstPipeline();
+    void destroyGstPipeline();
 
     static void handleGstMessage(GstBus*     bus,
                                  GstMessage* message,
