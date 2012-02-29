@@ -11,7 +11,8 @@ CONFIG    += link_pkgconfig \
              qdeclarative-boostable
 PKGCONFIG += gstreamer-net-0.10 \
              gstreamer-base-0.10 \
-             gstreamer-audio-0.10
+             gstreamer-audio-0.10 \
+             conic
 
 # Do not clutter the source directory
 #

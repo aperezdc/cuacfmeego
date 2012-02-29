@@ -6,6 +6,8 @@
  */
 
 #include "cfm-controller.h"
+#include <dbus/dbus.h>
+#include <dbus/dbus-glib-lowlevel.h>
 #include <QDeclarativeContext>
 
 
@@ -59,13 +61,29 @@ getProperty<bool>(void* object, const gchar* name)
 
 CFMController::CFMController(QDeclarativeContext* context):
     _context(context),
-    _bufferFillRate(-1)
+    _bufferFillRate(-1),
+    _playPending(false),
+    _connected(false)
 {
     Q_ASSERT(context);
 
-    if ((_playbin = gst_element_factory_make("playbin2", "playbin")) == NULL) {
-        qCritical("Could not create GStreamer playbin2 element");
+    DBusConnection *systembus = dbus_bus_get(DBUS_BUS_SYSTEM, NULL);
+    if (!systembus) {
+        qFatal("Could not connect to the D-Bus system bus");
     }
+    dbus_connection_setup_with_g_main(systembus, NULL);
+
+    if ((_playbin = gst_element_factory_make("playbin2", "playbin")) == NULL) {
+        qFatal("Could not create GStreamer playbin2 element");
+    }
+
+    if ((_connection = con_ic_connection_new ()) == NULL) {
+        qFatal("Coult not create ConIcConnection object");
+    }
+
+    g_signal_connect(G_OBJECT(_connection), "connection-event",
+                     G_CALLBACK(CFMController::handleConnectionEvent), this);
+    ::setProperty(_connection, "automatic-connection-events", true);
 
     g_signal_connect(gst_pipeline_get_bus(GST_PIPELINE(_playbin)), "message",
                      G_CALLBACK(CFMController::handleGstMessage), this);
@@ -80,6 +98,7 @@ CFMController::CFMController(QDeclarativeContext* context):
 CFMController::~CFMController()
 {
     gst_object_unref(_playbin);
+    g_object_unref(_connection);
 }
 
 
@@ -100,6 +119,9 @@ bool CFMController::isPlaying() const
 {
     GstState state;
     GstState nextState;
+
+    if (_playPending)
+        return false;
 
     gst_element_get_state(_playbin,
                           &state,
@@ -133,11 +155,31 @@ bool CFMController::isPlaying() const
 
 void CFMController::setPlaying(bool playingValue)
 {
-    gst_element_set_state(_playbin, playingValue ? GST_STATE_PLAYING
-                                                 : GST_STATE_PAUSED);
-
-    // TODO Wait for GStreamer notifies about status being actually changed
-    emit playingStatusChanged(playingValue);
+    if (playingValue) {
+        if (!isNetworkAvailable()) {
+            if (!_playPending) {
+                qDebug("playback: no network, requesting -> pending");
+                _playPending = true;
+                setNetworkAvailable(true);
+            }
+            else {
+                qDebug("playback: no network, still pending...");
+            }
+        }
+        else {
+            qDebug("playback: network available -> playing");
+            _playPending = false;
+            gst_element_set_state(_playbin, GST_STATE_PLAYING);
+            emit playingStatusChanged(true);
+        }
+    }
+    else {
+        qDebug("playback: stopped");
+        _playPending = false;
+        gst_element_set_state(_playbin, GST_STATE_PAUSED);
+        // TODO Wait for GStreamer notifies about status being actually changed
+        emit playingStatusChanged(false);
+    }
 }
 
 
@@ -223,6 +265,66 @@ void CFMController::handleGstMessage(GstBus     *bus,
         }
 
         default: /* For the rest of messages, do nothing. */
+            break;
+    }
+}
+
+
+bool CFMController::isNetworkAvailable() const
+{
+    return _connected;
+}
+
+
+void CFMController::setNetworkAvailable(bool availability)
+{
+    if (!_connected && availability) {
+        qDebug("network: connection requested");
+        if (!con_ic_connection_connect(_connection, CON_IC_CONNECT_FLAG_NONE))
+            qFatal("Failed sending D-Bus message to connection manager");
+    }
+}
+
+
+void CFMController::handleConnectionEvent(ConIcConnection      *connection,
+                                          ConIcConnectionEvent *event,
+                                          gpointer              controllerptr)
+{
+    CFMController *controller = (CFMController*) controllerptr;
+
+    Q_ASSERT(controller);
+    Q_UNUSED(connection);
+
+    ConIcConnectionStatus status = con_ic_connection_event_get_status(event);
+
+    switch (status) {
+        case CON_IC_STATUS_CONNECTED:
+            qDebug("network: connected");
+            // If playing was requested and we were waiting for a connection
+            // event, start playing now.
+            controller->emit networkAvailableChanged((controller->_connected = true));
+            if (controller->_playPending) {
+                controller->setPlaying(true);
+                controller->_playPending = false;
+            }
+            break;
+
+        case CON_IC_STATUS_DISCONNECTING:
+            qDebug("network: disconnecting...");
+            // If playing was enabled, then we need to pause and tell the
+            // user about the connection being lost.
+            //
+            // TODO: Show notification on connection lost.
+            controller->emit networkAvailableChanged((controller->_connected = false));
+            controller->setPlaying(false);
+            break;
+
+        case CON_IC_STATUS_NETWORK_UP:
+            qDebug("network: connecting...");
+            break;
+
+        case CON_IC_STATUS_DISCONNECTED:
+            qDebug("network: disconnected");
             break;
     }
 }
