@@ -89,7 +89,7 @@ Page {
             }
 
             Text {
-                id: aboutMeneameDisclaimer
+                id: aboutContentDisclaimer
                 font.family: UIConstants.FONT_FAMILY
                 font.pixelSize: UIConstants.FONT_LSMALL
                 color: !theme.inverted ?
@@ -97,7 +97,7 @@ Page {
                            UIConstants.COLOR_INVERTED_FOREGROUND
                 width: parent.width
                 wrapMode: Text.WordWrap
-                text: 'This application displays content from <a href="http://cuacfm.org/">Last.fm</a> but is not endorsed nor certified by Cuac FM.'
+                text: 'This application displays content from <a href="http://cuacfm.org/">cuacfm.org</a> but is not endorsed nor certified by Cuac FM.'
                 onLinkActivated: Qt.openUrlExternally(link)
             }
 
