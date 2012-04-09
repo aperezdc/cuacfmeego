@@ -67,7 +67,7 @@ Page {
 
             Text {
                 id: aboutCopyright
-                text: 'Copyright © 2011 Adrian Perez'
+                text: 'Copyright © 2012 Adrian Perez'
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.family: UIConstants.FONT_FAMILY
                 font.pixelSize: UIConstants.FONT_XLARGE
