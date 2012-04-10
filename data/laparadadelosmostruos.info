@@ -1,0 +1,8 @@
+"La parada de los monstruos": {
+	"kind": "Magacín",
+	"time": [
+		[1, 17, 19, true],
+	],
+}
+
+// vim: ft=javascript

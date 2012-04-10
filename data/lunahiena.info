@@ -1,0 +1,8 @@
+"Luna Hiena": {
+	"kind": "Musical",
+	"time": [
+		[4, 7, 8, false]
+	],
+}
+
+// vim: ft=javascript

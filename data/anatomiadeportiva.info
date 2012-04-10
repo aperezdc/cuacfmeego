@@ -1,0 +1,10 @@
+"Anatomía Deportiva": {
+	"kind": "Informativo / Divulgación",
+	"time": [
+		[1, 22, 23, true ],
+		[3,  9, 10, false],
+	],
+}
+
+// vim: ft=javascript
+

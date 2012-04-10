@@ -1,0 +1,10 @@
+"Discovery": {
+	"icon": "discovery.png",
+	"kind": "Musical",
+	"time": [
+		[3, 21, 22,  true],
+		[1,  0,  1, false],
+	],
+}
+
+// vim:ft=javascript

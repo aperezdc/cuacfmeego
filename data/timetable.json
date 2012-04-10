@@ -1,0 +1,211 @@
+{
+"Desinformativo": {
+	"icon": "desinformativo.png",
+	"kind": "Informativo / Divulgación",
+	"time": [
+		[2,  9, 11, false],
+		[1, 20, 22,  true],
+	],
+}
+,
+"Feedback!": {
+	"icon": "feedback.png",
+	"kind": "Musical",
+	"time": [
+		[6, 9, 10, true],
+	],
+}
+,
+"Licencia Poética": {
+	"kind": "Magacín",
+	"time": [
+		[1, 11, 12, false],
+	],
+}
+,
+"Dentro de un Orden": {
+	"kind": "Magacín",
+	"time": [
+		[1, 12, 14, false],
+	],
+}
+,
+"La Isla": {
+	"kind": "Informativo / Divulgación",
+	"time": [
+		[2, 12, 14, false],
+		[7, 20, 22,  true],
+	],
+}
+,
+"Folk in trio": {
+	"icon": "folkin.jpg",
+	"kind": "Musical",
+	"time": [
+		[2, 0, 1, false],
+	],
+}
+,
+"Discovery": {
+	"icon": "discovery.png",
+	"kind": "Musical",
+	"time": [
+		[3, 21, 22,  true],
+		[1,  0,  1, false],
+	],
+}
+,
+"Democracy Now!": {
+	"icon": "masvoces_democracy.png",
+	"kind": "Informativo / Divulgación",
+	"time": [
+		[1, 8.5, 9, true],
+		[2, 8.5, 9, true],
+		[3, 8.5, 9, true],
+		[4, 8.5, 9, true],
+		[5, 8.5, 9, true],
+	],
+}
+,
+"Alegría": {
+	"kind": "Magacín",
+	"time": [
+		[5, 9, 10, false],
+	],
+}
+,
+"En Boxes": {
+	"kind": "Informativo / Divulgación",
+	"time": [
+		[4, 9, 10, false],
+	],
+}
+,
+"Luna Hiena": {
+	"kind": "Musical",
+	"time": [
+		[4, 7, 8, false]
+	],
+}
+,
+"Higher street": {
+	"kind": "Musical",
+	"time": [
+		[3, 7, 8, false]
+	],
+}
+,
+"Leña dura DF": {
+	"kind": "Musical",
+	"time": [
+		[1,  7,  8, false],
+		[1, 15, 16,  true],
+	],
+}
+,
+"Restos de Stock": {
+	"kind": "Musical",
+	"time": [
+		[2, 7, 8, false]
+	],
+}
+,
+"RBMA": {
+	"icon": "rbma.png",
+	"kind": "Musical",
+	"time": [
+		[6, 8, 9, true],
+	],
+}
+,
+"Multiplex": {
+	"kind": "Musical",
+	"time": [
+		[2, 15, 16,  true],
+		[1,  1,  2, false],
+	],
+}
+,
+"Un pasito más": {
+	"kind": "Informativo / Divulgación",
+	"time": [
+		[3, 10, 11, false],
+	],
+}
+,
+"Jichos": {
+	"kind": "?",
+	"time": [
+		[2, 16, 17, false],
+		[4, 17, 18, false],
+		[6, 14, 15,  true],
+		[7, 18, 19, false],
+	],
+}
+,
+"Anatomía Deportiva": {
+	"kind": "Informativo / Divulgación",
+	"time": [
+		[1, 22, 23, true ],
+		[3,  9, 10, false],
+	],
+}
+,
+"Una noche en la ópera": {
+	"kind": "Musical",
+	"time": [
+		[2, 1, 2, false],
+	],
+}
+,
+"El mundo sentado a mis piés": {
+	"kind": "Magacín",
+	"time": [
+		[1, 16, 17, true],
+	],
+}
+,
+"Ar de Coruña": {
+	"icon": "arde.jpg",
+	"kind": "Magacín",
+	"time": [
+		[1, 9, 11, false],
+	],
+}
+,
+"Más Voces": {
+	"icon": "masvoces_democracy.png",
+	"kind": "Informativo / Divulgación",
+	"time": [
+		[1, 8, 8.5, true], [1, 14, 14.5, true],
+		[2, 8, 8.5, true], [2, 14, 14.5, true],
+		[3, 8, 8.5, true], [3, 14, 14.5, true],
+		[4, 8, 8.5, true], [4, 14, 14.5, true],
+		[5, 8, 8.5, true], [5, 14, 14.5, true],
+	],
+}
+,
+"Minoría absoluta": {
+	"kind": "Magacín",
+	"time": [
+		[1, 23, 24,  true],
+		[2, 11, 12, false],
+	],
+}
+,
+"La Gran Armada": {
+	"icon": "armada.jpg",
+	"kind": "Informativo / Divulgación",
+	"time": [
+		[4, 10, 11, false],
+	],
+}
+,
+"La parada de los monstruos": {
+	"kind": "Magacín",
+	"time": [
+		[1, 17, 19, true],
+	],
+}
+,
+}

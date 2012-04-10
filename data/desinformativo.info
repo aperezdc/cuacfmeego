@@ -1,0 +1,10 @@
+"Desinformativo": {
+	"icon": "desinformativo.png",
+	"kind": "Informativo / Divulgación",
+	"time": [
+		[2,  9, 11, false],
+		[1, 20, 22,  true],
+	],
+}
+
+// vim: ft=javascript

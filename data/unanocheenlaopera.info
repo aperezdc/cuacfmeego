@@ -1,0 +1,9 @@
+"Una noche en la ópera": {
+	"kind": "Musical",
+	"time": [
+		[2, 1, 2, false],
+	],
+}
+
+// vim: ft=javascript
+

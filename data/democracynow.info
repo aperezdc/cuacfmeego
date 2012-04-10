@@ -1,0 +1,13 @@
+"Democracy Now!": {
+	"icon": "masvoces_democracy.png",
+	"kind": "Informativo / Divulgación",
+	"time": [
+		[1, 8.5, 9, true],
+		[2, 8.5, 9, true],
+		[3, 8.5, 9, true],
+		[4, 8.5, 9, true],
+		[5, 8.5, 9, true],
+	],
+}
+
+// vim: ft=javascript

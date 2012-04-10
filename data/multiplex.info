@@ -1,0 +1,9 @@
+"Multiplex": {
+	"kind": "Musical",
+	"time": [
+		[2, 15, 16,  true],
+		[1,  1,  2, false],
+	],
+}
+
+// vim: ft=javascript

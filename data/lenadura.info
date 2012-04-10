@@ -1,0 +1,9 @@
+"Leña dura DF": {
+	"kind": "Musical",
+	"time": [
+		[1,  7,  8, false],
+		[1, 15, 16,  true],
+	],
+}
+
+// vim: ft=javascript

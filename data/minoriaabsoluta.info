@@ -1,0 +1,10 @@
+"Minoría absoluta": {
+	"kind": "Magacín",
+	"time": [
+		[1, 23, 24,  true],
+		[2, 11, 12, false],
+	],
+}
+
+// vim: ft=javascript
+

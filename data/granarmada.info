@@ -1,0 +1,10 @@
+"La Gran Armada": {
+	"icon": "armada.jpg",
+	"kind": "Informativo / Divulgación",
+	"time": [
+		[4, 10, 11, false],
+	],
+}
+
+// vim: ft=javascript
+

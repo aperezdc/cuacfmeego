@@ -1,0 +1,10 @@
+"Folk in trio": {
+	"icon": "folkin.jpg",
+	"kind": "Musical",
+	"time": [
+		[2, 0, 1, false],
+	],
+}
+
+// vim: ft=javascript
+

@@ -1,0 +1,9 @@
+"Ar de Coruña": {
+	"icon": "arde.jpg",
+	"kind": "Magacín",
+	"time": [
+		[1, 9, 11, false],
+	],
+}
+
+// vim: ft=javascript

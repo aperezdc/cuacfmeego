@@ -1,0 +1,10 @@
+"Feedback!": {
+	"icon": "feedback.png",
+	"kind": "Musical",
+	"time": [
+		[6, 9, 10, true],
+	],
+}
+
+// vim: ft=javascript
+

@@ -1,0 +1,9 @@
+"RBMA": {
+	"icon": "rbma.png",
+	"kind": "Musical",
+	"time": [
+		[6, 8, 9, true],
+	],
+}
+
+// vim: ft=javascript

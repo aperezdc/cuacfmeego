@@ -1,0 +1,10 @@
+#! /bin/bash
+
+echo "{"
+for info in "$@"
+do
+	grep -vE '^//' "${info}"
+	echo ","
+done | grep -v '^[[:space:]]*$'
+echo "}"
+

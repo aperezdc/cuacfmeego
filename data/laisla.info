@@ -1,0 +1,9 @@
+"La Isla": {
+	"kind": "Informativo / Divulgación",
+	"time": [
+		[2, 12, 14, false],
+		[7, 20, 22,  true],
+	],
+}
+
+// vim:ft=javascript
