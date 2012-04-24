@@ -1,4 +1,4 @@
-cuacfmeego         usr/bin/
+cuacfmeego         opt/cuacfmeego/
+cuacfmeego.png     opt/cuacfmeego/
+cuacfmeego.svg     opt/cuacfmeego/
 cuacfmeego.desktop usr/share/applications/
-cuacfmeego.png     usr/share/icons/hicolor/64x64/apps/
-cuacfmeego.svg     usr/share/icons/hicolor/scalable/apps/

@@ -56,7 +56,7 @@ Page {
 
             Text {
                 id: aboutVersion
-                text: 'Cuac FM 0.1.1'
+                text: 'Cuac FM 0.1.0'
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.family: UIConstants.FONT_FAMILY
                 font.pixelSize: UIConstants.FONT_XLARGE

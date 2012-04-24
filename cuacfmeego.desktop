@@ -1,8 +1,8 @@
 [Desktop Entry]
 Encoding=UTF-8
-Version=0a1
+Version=0.1.0
 Type=Application
 Name=Cuac FM
 Comment=Listen to Cuac FM over internet, and more.
-Exec=/usr/bin/invoker --single-instance --type=d /usr/bin/cuacfmeego
-Icon=/usr/share/icons/hicolor/64x64/apps/cuacfmeego.png
+Exec=/usr/bin/invoker --single-instance --type=d /opt/cuacfmeego/cuacfmeego
+Icon=/opt/cuacfmeego/cuacfmeego.png
