@@ -8,6 +8,7 @@
 
 		<!-- Images -->
 		<file>cuacfmeego-logo.png</file>
+		<file>default.png</file>
 
 	</qresource>
 </RCC>

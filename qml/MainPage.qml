@@ -30,7 +30,7 @@ Page {
 
 	Image {
 		anchors.centerIn: parent
-		source: 'qrc:/cuacfmeego-logo.png'
+		source: 'qrc:/default.png'
 	}
 
 	Menu {
