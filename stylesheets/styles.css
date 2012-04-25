@@ -38,6 +38,10 @@ a {
   text-decoration:none;
 }
 
+a:hover {
+	text-decoration: underline;
+}
+
 a small {
   font-size:11px;
   color:#777;
@@ -136,6 +140,10 @@ header ul a {
   text-align:center;
   padding-top:6px;
   height:40px;
+}
+
+header ul a:hover {
+	text-decoration: none;
 }
 
 strong {
