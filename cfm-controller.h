@@ -66,6 +66,8 @@ public slots:
     bool isNetworkAvailable() const;
     void setNetworkAvailable(bool availability);
 
+    void openStoreClient(const QString& url) const;
+
 signals:
     void playbackError(const QString& message);
     void bufferingChanged(bool newStatus);

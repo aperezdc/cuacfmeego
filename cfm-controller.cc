@@ -9,9 +9,13 @@
 #include <dbus/dbus.h>
 #include <dbus/dbus-glib-lowlevel.h>
 #include <QDeclarativeContext>
+#include <QDBusInterface>
+#include <QDBusPendingCall>
+#include <QStringList>
 
 
-static const gchar CUACFM_STREAM_URL[] = "http://cien30.udc.es/cuacfm.mp3";
+static const gchar   CUACFM_STREAM_URL[] = "http://cien30.udc.es/cuacfm.mp3";
+static const QString STORE_DBUS_IFACE("com.nokia.OviStoreClient");
 
 
 static void setProperty(void* object,
@@ -395,4 +399,19 @@ void CFMController::updateStatusText()
 const QString& CFMController::getStatusText() const
 {
     return _statusText;
+}
+
+
+void CFMController::openStoreClient(const QString& url) const
+{
+    // Based on
+    // https://gitorious.org/n9-apps-client/n9-apps-client/blobs/master/daemon/notificationhandler.cpp#line178
+
+    QDBusInterface storeif(STORE_DBUS_IFACE, "/", STORE_DBUS_IFACE,
+                           QDBusConnection::sessionBus());
+
+    QStringList params;
+    params << url;
+
+    storeif.asyncCall("LaunchWithLink", QVariant::fromValue(params));
 }
