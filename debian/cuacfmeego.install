@@ -2,3 +2,4 @@ cuacfmeego         opt/cuacfmeego/
 cuacfmeego.png     opt/cuacfmeego/
 cuacfmeego.svg     opt/cuacfmeego/
 cuacfmeego.desktop usr/share/applications/
+cuacfmeego.conf    usr/share/policy/etc/syspart.conf.d/
