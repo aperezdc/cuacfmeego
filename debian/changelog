@@ -1,3 +1,10 @@
+cuacfmeego (0.1.1) unstable; urgency=low
+
+  * Added policy framework configuration file, this makes the volume keys in
+  the N9 work as expected.
+
+ -- Adrian Perez <aperez@igalia.com>  Sat, 26 May 2012 21:12:55 +0300
+
 cuacfmeego (0.1.0) unstable; urgency=low
 
   * Initial release.

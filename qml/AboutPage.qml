@@ -1,7 +1,7 @@
 /*
  * about.qml
  * Copyright (C) 2011 Simon Pena <aperez@igalia.com>
- * Copyright (C) 2011 Adrian Perez <aperez@igalia.com>
+ * Copyright (C) 2011-2012 Adrian Perez <aperez@igalia.com>
  *
  * Distributed under terms of the GPLv3 license.
  */
@@ -56,7 +56,7 @@ Page {
 
             Text {
                 id: aboutVersion
-                text: 'Cuac FM 0.1.0'
+                text: 'Cuac FM 0.1.1'
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.family: UIConstants.FONT_FAMILY
                 font.pixelSize: UIConstants.FONT_XLARGE
