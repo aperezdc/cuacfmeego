@@ -9,6 +9,8 @@
 		<!-- Images -->
 		<file>cuacfmeego-logo.png</file>
 		<file>default.png</file>
+		<file>resources/round-corners-shadow.png</file>
+		<file>resources/round-corners-shadow-inverse.png</file>
 
 	</qresource>
 </RCC>
