@@ -368,24 +368,24 @@ void CFMController::handleConnectionEvent(ConIcConnection      *connection,
 
 void CFMController::updateStatusText()
 {
-    static const QString bufferingText("Buffering... %1%");
-    static const QString mutedText("%1 - Muted");
+    static const QString bufferingText(tr("Buffering... %1%"));
+    static const QString mutedText(tr("%1 - Muted"));
     QString newText;
 
     if (_connected) {
         if (isBuffering())
             newText = bufferingText.arg(getBufferingStatus());
         else if (isPlaying())
-            newText = "Playing";
+            newText = tr("Playing");
         else
-            newText = "Paused";
+            newText = tr("Paused");
     }
     else {
         // No connection
         if (_playPending)
-            newText = "Connecting...";
+            newText = tr("Connecting...");
         else
-            newText = "Disconnected";
+            newText = tr("Disconnected");
     }
 
     if (isMuted())

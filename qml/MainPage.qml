@@ -37,11 +37,13 @@ Page {
 		id: mainMenu
 		MenuLayout {
 			MenuItem {
-				text: 'Open website'
+				//: Menu option in main page to open radio station website
+				text: qsTr('Open website')
 				onClicked: Qt.openUrlExternally('http://cuacfm.org')
 			}
 			MenuItem {
-				text: 'About'
+				//: Menu option in main page to open the about page
+				text: qsTr('About')
 				onClicked: appWindow.pageStack.push(aboutPage)
 			}
 		}
@@ -57,7 +59,8 @@ Page {
 
 		ToolButton {
 			id: playButton
-			text: (controller.playing || controller.buffering) ? 'Pause' : 'Play'
+			//: Play/Pause button in the lower toolbar of the main page
+			text: (controller.playing || controller.buffering) ?  qsTr('Pause') : qsTr('Play')
 			anchors.horizontalCenter: parent.horizontalCenter;
 			onClicked: controller.setPlaying(!controller.isPlaying())
 		}

@@ -6,6 +6,9 @@
  */
 
 #include "cfm-controller.h"
+#include <QLocale>
+#include <QTextCodec>
+#include <QTranslator>
 #include <QApplication>
 #include <QDeclarativeView>
 #include <MDeclarativeCache>
@@ -21,10 +24,21 @@ main (int argc, char *argv[])
     gst_init(&argc, &argv);
 
     QApplication *application(MDeclarativeCache::qApplication(argc, argv));
-    QDeclarativeView    *view(MDeclarativeCache::qDeclarativeView());
 
     application->setApplicationName("CuacFM");
+    application->setOrganizationDomain("com.igalia.people");
+    application->setOrganizationName("aperez");
 
+    // Assume that strings in source fils are UTF-8 (as they should!)
+    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf-8"));
+
+    QString locale(QLocale::system().name());
+    QTranslator translator;
+
+    if (translator.load("l10n/" + locale, ":/") || translator.load("l10n/en", ":/"))
+        application->installTranslator(&translator);
+
+    QDeclarativeView *view(MDeclarativeCache::qDeclarativeView());
     CFMController controller(view->rootContext());
     view->setSource(INITIAL_VIEW);
     view->showFullScreen();

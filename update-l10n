@@ -1,0 +1,2 @@
+#! /bin/sh
+exec lupdate qml/*.qml *.h *.cc -ts l10n/*.ts

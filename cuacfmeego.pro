@@ -31,3 +31,19 @@ SOURCES    += cfm-main.cc \
 HEADERS    += cfm-controller.h
 RESOURCES  += cuacfmeego.qrc
 
+# l10n stuff
+#
+CODECFORTR    = UTF-8
+TRANSLATIONS += l10n/en.ts \
+                l10n/es.ts
+
+# Rule for regenerating .qm files for translations (this is missing
+# from the default qmake rule set).
+#
+updateqm.input = TRANSLATIONS
+updateqm.output = ${QMAKE_FILE_PATH}/${QMAKE_FILE_BASE}.qm
+updateqm.commands = lrelease ${QMAKE_FILE_IN} -qm ${QMAKE_FILE_OUT}
+updateqm.CONFIG += no_link
+QMAKE_EXTRA_COMPILERS += updateqm
+PRE_TARGETDEPS = compiler_updateqm_make_all
+

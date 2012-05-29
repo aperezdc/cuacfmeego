@@ -3,6 +3,7 @@ qrc_*.cpp
 moc_*.cpp
 ,build/
 Makefile
+l10n/*.qm
 debian/*.log
 debian/*.substvars
 debian/files

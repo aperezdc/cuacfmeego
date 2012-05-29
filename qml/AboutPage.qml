@@ -203,12 +203,14 @@ Page {
                            UIConstants.COLOR_INVERTED_FOREGROUND
                 width: parent.width
                 wrapMode: Text.WordWrap
-                text: 'This application displays content from <a href="http://cuacfm.org/">cuacfm.org</a> but is not endorsed nor certified by Cuac FM.'
+                //: Disclaimer in about page
+                text: qsTr('This application displays content from <a href="http://cuacfm.org/">cuacfm.org</a> but is not endorsed nor certified by Cuac FM.')
                 onLinkActivated: Qt.openUrlExternally(link)
             }
 
         		Button {
         			anchors.horizontalCenter: parent.horizontalCenter
+        			//: Button which open the license text popup from the about page
         			text: qsTr('Licensing terms')
         			onClicked: licenseDialog.open()
         		}
@@ -218,6 +220,7 @@ Page {
 		QueryDialog {
 			id: licenseDialog
 			message: license
+			//: Button which closes the license popup in the about page
 			acceptButtonText: qsTr('Dismiss')
 		}
 

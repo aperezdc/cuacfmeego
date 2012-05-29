@@ -12,6 +12,10 @@
 		<file>resources/round-corners-shadow.png</file>
 		<file>resources/round-corners-shadow-inverse.png</file>
 
+		<!-- Localizations -->
+		<file>l10n/en.qm</file>
+		<file>l10n/es.qm</file>
+
 	</qresource>
 </RCC>
 <!-- vim: filetype=xml
