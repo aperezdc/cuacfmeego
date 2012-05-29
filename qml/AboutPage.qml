@@ -98,12 +98,10 @@ Page {
 							text: 'Cuac FM 0.1.1'
 							width: parent.width
 							horizontalAlignment: Text.AlignHCenter
+							color: UIConstants.COLOR_INVERTED_FOREGROUND
 							platformStyle: LabelStyle {
 								fontPixelSize: UIConstants.FONT_XLARGE
 							}
-							color: !theme.inverted ?
-												 UIConstants.COLOR_FOREGROUND :
-												 UIConstants.COLOR_INVERTED_FOREGROUND
             }
 
             Label {
@@ -111,21 +109,17 @@ Page {
 							text: 'Copyright © 2012 Adrian Perez'
 							width: parent.width
 							horizontalAlignment: Text.AlignHCenter
+							color: UIConstants.COLOR_INVERTED_FOREGROUND
 							platformStyle: LabelStyle {
 								fontPixelSize: UIConstants.FONT_LSMALL
 								fontFamily: UIConstants.FONT_FAMILY_LIGHT
 							}
-							color: !theme.inverted ?
-												 UIConstants.COLOR_FOREGROUND :
-												 UIConstants.COLOR_INVERTED_FOREGROUND
             }
 
 						Rectangle {
 							width: parent.width
 							height: repeater.model.count * UIConstants.LIST_ITEM_HEIGHT_SMALL
-							color: !theme.inverted ?
-													UIConstants.COLOR_BACKGROUND :
-													UIConstants.COLOR_INVERTED_BACKGROUND
+							color: UIConstants.COLOR_INVERTED_BACKGROUND
 
 							Column {
 								id: subcolumn
@@ -151,9 +145,7 @@ Page {
 											platformStyle: LabelStyle {
 												fontPixelSize: UIConstants.FONT_SLARGE
 											}
-                			color: !theme.inverted ?
-                           			UIConstants.COLOR_FOREGROUND :
-                           			UIConstants.COLOR_INVERTED_FOREGROUND
+                			color: UIConstants.COLOR_INVERTED_FOREGROUND
 										}
 										MoreIndicator {
 											anchors {
@@ -166,7 +158,7 @@ Page {
 											anchors.bottom: parent.bottom
 											width: parent.width
 											height: 1
-											color: UIConstants.COLOR_BUTTON_DISABLED_FOREGROUND
+											color: '#aeaeae'
 											visible: index !== repeater.model.count - 1
 										}
 										MouseArea {
@@ -186,11 +178,9 @@ Page {
 
 							BorderImage {
 								id: border
-								source: !theme.inverted ?
-									'qrc:/resources/round-corners-shadow.png' :
-									'qrc:/resources/round-corners-shadow-inverse.png'
+								source: 'qrc:/resources/round-corners.png'
 								anchors.fill: parent
-								border { left: 18; top: 18; right: 18; bottom: 18 }
+								border { left: 20; top: 20; right: 20; bottom: 20 }
 							}
 						}
 
@@ -198,9 +188,7 @@ Page {
                 id: aboutContentDisclaimer
                 font.family: UIConstants.FONT_FAMILY
                 font.pixelSize: UIConstants.FONT_LSMALL
-                color: !theme.inverted ?
-                           UIConstants.COLOR_FOREGROUND :
-                           UIConstants.COLOR_INVERTED_FOREGROUND
+                color: UIConstants.COLOR_INVERTED_FOREGROUND
                 width: parent.width
                 wrapMode: Text.WordWrap
                 //: Disclaimer in about page

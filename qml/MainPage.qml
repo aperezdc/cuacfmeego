@@ -18,19 +18,22 @@ Page {
 		AboutPage { }
 	}
 
-	Text {
-		color: theme.inverted ? UIConstants.COLOR_INVERTED_FOREGROUND : UIConstants.COLOR_FOREGROUND
-		anchors.horizontalCenter: parent.horizontalCenter
-		anchors.top: parent.top
-		anchors.topMargin: UIConstants.DEFAULT_MARGIN * 3
-		font.pixelSize: UIConstants.FONT_XLARGE
-		font.family: UIConstants.FONT_FAMILY
+	Label {
 		text: controller.statusText
+		color: UIConstants.COLOR_INVERTED_FOREGROUND
+		anchors {
+			horizontalCenter: parent.horizontalCenter
+			top: parent.top
+			topMargin: UIConstants.DEFAULT_MARGIN * 3
+		}
+		platformStyle: LabelStyle {
+			fontPixelSize: UIConstants.FONT_XLARGE
+		}
 	}
 
 	Image {
 		anchors.centerIn: parent
-		source: 'qrc:/default.png'
+		source: 'qrc:/resources/default.png'
 	}
 
 	Menu {

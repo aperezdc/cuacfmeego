@@ -6,11 +6,10 @@
 		<file>qml/MainPage.qml</file>
 		<file>qml/AboutPage.qml</file>
 
-		<!-- Images -->
+		<!-- Images and other resources -->
 		<file>cuacfmeego-logo.png</file>
-		<file>default.png</file>
-		<file>resources/round-corners-shadow.png</file>
-		<file>resources/round-corners-shadow-inverse.png</file>
+		<file>resources/default.png</file>
+		<file>resources/round-corners.png</file>
 
 		<!-- Localizations -->
 		<file>l10n/en.qm</file>
