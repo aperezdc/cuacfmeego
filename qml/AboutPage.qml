@@ -8,7 +8,6 @@
 
 import QtQuick 1.1
 import com.nokia.meego 1.0
-import com.nokia.extras 1.1
 import "file:///usr/lib/qt4/imports/com/meego/UIConstants.js" as UIConstants
 
 Page {
@@ -116,71 +115,70 @@ Page {
 							}
             }
 
-						Rectangle {
-							width: parent.width
+						Column {
 							height: repeater.model.count * UIConstants.LIST_ITEM_HEIGHT_SMALL
-							color: UIConstants.COLOR_INVERTED_BACKGROUND
+							width: parent.width
+							anchors {
+								topMargin: UIConstants.DEFAULT_MARGIN * 2
+								bottomMargin: UIConstants.DEFAULT_MARGIN * 2
+							}
 
-							Column {
-								id: subcolumn
-								anchors.fill: parent
-								Repeater {
-									id: repeater
-									model: aboutOptions
-									Item {
-										height: UIConstants.LIST_ITEM_HEIGHT_SMALL
+							Repeater {
+								id: repeater
+								model: aboutOptions
+								Item {
+									height: UIConstants.LIST_ITEM_HEIGHT_SMALL
+									width: parent.parent.width
+									BorderImage {
+										anchors.fill: parent
+										visible: mouseArea.pressed
+										source: 'image://theme/meegotouch-list-fullwidth-inverted-background-pressed-vertical-center'
+									}
+									Rectangle {
+										anchors.bottom: parent.top
 										width: parent.width
-										BorderImage {
-											anchors.fill: parent
-											visible: mouseArea.pressed
-											source: 'image://theme/meegotouch-list-fullwidth-background-pressed-vertical-center'
+										height: 1
+										color: '#444'
+									}
+									Label {
+										text: model.title
+										anchors {
+											left: parent.left
+											leftMargin: UIConstants.DEFAULT_MARGIN
+											verticalCenter: parent.verticalCenter
 										}
-										Label {
-											text: model.title
-											anchors {
-												left: parent.left
-												leftMargin: UIConstants.DEFAULT_MARGIN
-												verticalCenter: parent.verticalCenter
-											}
-											platformStyle: LabelStyle {
-												fontPixelSize: UIConstants.FONT_SLARGE
-											}
-                			color: UIConstants.COLOR_INVERTED_FOREGROUND
+										platformStyle: LabelStyle {
+											fontPixelSize: UIConstants.FONT_SLARGE
 										}
-										MoreIndicator {
-											anchors {
-												right: parent.right
-												rightMargin: UIConstants.DEFAULT_MARGIN
-												verticalCenter: parent.verticalCenter
-											}
+										color: UIConstants.COLOR_INVERTED_FOREGROUND
+									}
+									Image {
+										source: 'image://theme/icon-m-common-drilldown-arrow-inverse'
+										anchors {
+											right: parent.right
+											rightMargin: UIConstants.DEFAULT_MARGIN
+											verticalCenter: parent.verticalCenter
 										}
-										Rectangle {
-											anchors.bottom: parent.bottom
-											width: parent.width
-											height: 1
-											color: '#aeaeae'
-											visible: index !== repeater.model.count - 1
-										}
-										MouseArea {
-											id: mouseArea
-											anchors.fill: parent
-											onClicked: {
-												if (model.action === 'openStore') {
-													controller.openStoreClient(model.data)
-												} else if (model.action === 'openExternally') {
-													Qt.openUrlExternally(model.data)
-												}
+									}
+									Rectangle {
+										anchors.bottom: parent.bottom
+										width: parent.width
+										height: 1
+										color: '#444'
+										visible: index === repeater.model.count - 1
+									}
+									MouseArea {
+										id: mouseArea
+										anchors.fill: parent
+										onClicked: {
+											if (model.action === 'openStore') {
+												controller.openStoreClient(model.data)
+											} else if (model.action === 'openExternally') {
+												Qt.openUrlExternally(model.data)
 											}
 										}
 									}
 								}
-							}
-
-							BorderImage {
-								id: border
-								source: 'qrc:/resources/round-corners.png'
-								anchors.fill: parent
-								border { left: 20; top: 20; right: 20; bottom: 20 }
 							}
 						}
 
