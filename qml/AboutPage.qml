@@ -94,7 +94,7 @@ Page {
 
             Label {
 							id: aboutVersion
-							text: 'Cuac FM 0.1.1'
+							text: 'Cuac FM 0.1.2'
 							width: parent.width
 							horizontalAlignment: Text.AlignHCenter
 							color: UIConstants.COLOR_INVERTED_FOREGROUND

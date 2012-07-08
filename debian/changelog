@@ -1,3 +1,11 @@
+cuacfmeego (0.1.2) unstable; urgency=low
+
+  * Revamped and improved about page.
+  * Added localization support.
+  * Spanish translation.
+
+ -- Adrian Perez <aperez@igalia.com>  Tue, 29 May 2012 13:34:13 +0300
+
 cuacfmeego (0.1.1) unstable; urgency=low
 
   * Added policy framework configuration file, this makes the volume keys in
