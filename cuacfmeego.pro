@@ -27,8 +27,10 @@ QMAKE_LFLAGS   += -pie -rdynamic -Wl,--as-needed
 # Application sources
 #
 SOURCES    += cfm-main.cc \
-              cfm-controller.cc
-HEADERS    += cfm-controller.h
+              cfm-controller.cc \
+              qml-file.cc
+HEADERS    += cfm-controller.h \
+              qml-file.h
 RESOURCES  += cuacfmeego.qrc
 
 # l10n stuff

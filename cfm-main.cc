@@ -6,12 +6,14 @@
  */
 
 #include "cfm-controller.h"
+#include "qml-file.h"
 #include <QLocale>
 #include <QTextCodec>
 #include <QTranslator>
 #include <QApplication>
 #include <QDeclarativeView>
 #include <MDeclarativeCache>
+#include <QtDeclarative>
 #include <gst/gst.h>
 
 
@@ -21,6 +23,8 @@ static const QUrl INITIAL_VIEW("qrc:/qml/main.qml");
 Q_DECL_EXPORT int
 main (int argc, char *argv[])
 {
+    qmlRegisterType<QmlFile, 1>("com.igalia.people.aperez", 1, 0, "File");
+
     gst_init(&argc, &argv);
 
     QApplication *application(MDeclarativeCache::qApplication(argc, argv));
