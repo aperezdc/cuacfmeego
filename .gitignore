@@ -9,3 +9,4 @@ debian/*.substvars
 debian/files
 debian/cuacfmeego-dbg/
 debian/cuacfmeego.aegis
+*.sw[op]
